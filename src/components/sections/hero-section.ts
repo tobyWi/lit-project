@@ -2,6 +2,8 @@ import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { cvData } from "../../data/cv-data";
 
+const profileImageUrl = `${import.meta.env.BASE_URL}img/profile-pic.jpeg`;
+
 @customElement("hero-section")
 export class HeroSection extends LitElement {
   static styles = css`
@@ -66,7 +68,7 @@ export class HeroSection extends LitElement {
           </div>
           <img
             class="photo"
-            src="/img/profile-pic.jpeg"
+            src=${profileImageUrl}
             alt="${cvData.name} profile photo"
           />
         </div>
