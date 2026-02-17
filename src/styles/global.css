@@ -1,0 +1,24 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "IBM Plex Sans", "Avenir Next", "Segoe UI", sans-serif;
+  line-height: 1.45;
+  color: var(--text-main);
+  background:
+    radial-gradient(1200px 520px at -8% -10%, #eaf7ee 0%, transparent 58%),
+    radial-gradient(1000px 480px at 108% -15%, #ebf2e7 0%, transparent 62%),
+    var(--bg);
+}
+
+a {
+  color: var(--accent);
+}

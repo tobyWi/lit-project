@@ -1,0 +1,23 @@
+{
+  "name": "lit-proj",
+  "version": "1.0.0",
+  "description": "Personal CV site built with Lit",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.29.3",
+  "dependencies": {
+    "lit": "^3.3.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
+  }
+}
