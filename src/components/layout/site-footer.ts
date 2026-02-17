@@ -1,5 +1,7 @@
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js";
+import { cvData } from "../../data/cv-data";
+import { footerSuffix } from "../../data/sections/footer-data";
 
 @customElement("site-footer")
 export class SiteFooter extends LitElement {
@@ -21,7 +23,9 @@ export class SiteFooter extends LitElement {
 
   render() {
     return html`
-      <p>&copy; ${new Date().getFullYear()} Your Name. All rights reserved.</p>
+      <p>
+        &copy; ${new Date().getFullYear()} ${cvData.name}. ${footerSuffix}
+      </p>
     `;
   }
 }
