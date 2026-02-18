@@ -21,7 +21,7 @@ export class SectionCard extends LitElement {
   static styles = css`
     :host {
       display: block;
-      background: var(--surface);
+      background: var(--section-bg, var(--surface));
       border: 2px solid var(--border);
       border-radius: var(--radius-lg);
       padding: var(--space-5);

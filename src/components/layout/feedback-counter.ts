@@ -20,7 +20,7 @@ export class FeedbackCounter extends LitElement {
     }
 
     .panel {
-      background: var(--surface-2);
+      background: var(--section-bg, var(--surface-2));
       border-radius: 0;
       padding: 1rem;
       display: grid;

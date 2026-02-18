@@ -1,16 +1,16 @@
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { cvData } from "../../data/cv-data";
-import { heroInstructionText } from "../../data/sections/hero-data";
+import { topSectionInstructionText } from "../../data/sections/top-section-data";
 
 const profileImageUrl = `${import.meta.env.BASE_URL}img/profile-pic.jpeg`;
 
-@customElement("hero-section")
-export class HeroSection extends LitElement {
+@customElement("top-section")
+export class TopSection extends LitElement {
   static styles = css`
     :host {
       display: block;
-      background: var(--surface);
+      background: var(--section-bg, var(--surface));
       border: 2px solid var(--border);
       border-radius: var(--radius-lg);
       padding: var(--space-5);
@@ -58,7 +58,7 @@ export class HeroSection extends LitElement {
             <h1>${cvData.name}</h1>
             <p>${cvData.title}</p>
             <p>${cvData.summary}</p>
-            <p>${heroInstructionText}</p>
+            <p>${topSectionInstructionText}</p>
           </div>
           <img
             class="photo"

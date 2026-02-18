@@ -1,7 +1,7 @@
 import "../components/layout/site-footer";
 import "../components/layout/feedback-counter";
 import "../components/ui/unlock-celebration";
-import "../components/sections/hero-section";
+import "../components/sections/top-section";
 import "../components/sections/about-section";
 import "../components/sections/experience-section";
 import "../components/sections/skills-section";
@@ -61,13 +61,13 @@ export class CvApp extends LitElement {
       <a id="top"></a>
       <main>
         <div class="sections">
-          <hero-section></hero-section>
-          <feedback-counter></feedback-counter>
-          <about-section></about-section>
-          <experience-section></experience-section>
-          <education-section></education-section>
-          <skills-section></skills-section>
-          <contact-section></contact-section>
+          <top-section style="--section-bg:#ffffff;"></top-section>
+          <feedback-counter style="--section-bg:#efefef;"></feedback-counter>
+          <about-section style="--section-bg:#f0f0f0;"></about-section>
+          <experience-section style="--section-bg:#dfe9f8;"></experience-section>
+          <education-section style="--section-bg:#ffe9c9;"></education-section>
+          <skills-section style="--section-bg:#dff0e3;"></skills-section>
+          <contact-section style="--section-bg:#f8dede;"></contact-section>
         </div>
       </main>
       <unlock-celebration></unlock-celebration>
