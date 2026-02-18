@@ -67,13 +67,28 @@ export class UnlockCelebration extends LitElement {
 
     button {
       margin-top: 0.95rem;
-      border: 1px solid color-mix(in oklab, var(--accent), white 60%);
-      background: color-mix(in oklab, var(--accent-soft), white 18%);
-      color: color-mix(in oklab, var(--accent), black 20%);
-      border-radius: 999px;
-      padding: 0.45rem 0.9rem;
+      border: 2px solid var(--accent);
+      border-radius: 0;
+      padding: 0.42rem 0.78rem;
       font: inherit;
+      font-weight: 600;
       cursor: pointer;
+      background: var(--accent-soft);
+      color: var(--text-main);
+      transition:
+        background-color 120ms ease,
+        border-color 120ms ease,
+        color 120ms ease;
+    }
+
+    button:hover {
+      background: color-mix(in oklab, var(--accent-soft), white 26%);
+    }
+
+    button:focus-visible {
+      background: color-mix(in oklab, var(--accent-soft), white 26%);
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
     }
 
     .confetti {

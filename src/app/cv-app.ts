@@ -52,6 +52,21 @@ export class CvApp extends LitElement {
       max-width: 860px;
       width: 100%;
       margin: 0 auto;
+      --accordion-bg: #9efba9;
+      --panel-bg: #ffffff;
+    }
+
+    top-section,
+    feedback-counter {
+      --section-bg: var(--panel-bg);
+    }
+
+    about-section,
+    experience-section,
+    education-section,
+    skills-section,
+    contact-section {
+      --section-bg: var(--accordion-bg);
     }
 
   `;
@@ -61,13 +76,13 @@ export class CvApp extends LitElement {
       <a id="top"></a>
       <main>
         <div class="sections">
-          <top-section style="--section-bg:#ffffff;"></top-section>
-          <feedback-counter style="--section-bg:#ffffff;"></feedback-counter>
-          <about-section style="--section-bg:#bfe4ff;"></about-section>
-          <experience-section style="--section-bg:#bfe4ff;"></experience-section>
-          <education-section style="--section-bg:#bfe4ff;"></education-section>
-          <skills-section style="--section-bg:#bfe4ff;"></skills-section>
-          <contact-section style="--section-bg:#bfe4ff;"></contact-section>
+          <top-section></top-section>
+          <feedback-counter></feedback-counter>
+          <about-section></about-section>
+          <experience-section></experience-section>
+          <education-section></education-section>
+          <skills-section></skills-section>
+          <contact-section></contact-section>
         </div>
       </main>
       <unlock-celebration></unlock-celebration>
