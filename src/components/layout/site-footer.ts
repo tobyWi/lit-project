@@ -1,7 +1,11 @@
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { cvData } from "../../data/cv-data";
-import { footerSuffix } from "../../data/sections/footer-data";
+import {
+  footerRepoLabel,
+  footerRepoUrl,
+  footerSuffix,
+} from "../../data/sections/footer-data";
 
 @customElement("site-footer")
 export class SiteFooter extends LitElement {
@@ -19,12 +23,19 @@ export class SiteFooter extends LitElement {
       color: var(--text-muted);
       font-size: 0.9rem;
     }
+
+    a {
+      color: var(--accent);
+    }
   `;
 
   render() {
     return html`
       <p>
         &copy; ${new Date().getFullYear()} ${cvData.name}. ${footerSuffix}
+        <a href=${footerRepoUrl} target="_blank" rel="noopener noreferrer"
+          >${footerRepoLabel}</a
+        >
       </p>
     `;
   }

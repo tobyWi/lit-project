@@ -62,12 +62,12 @@ export class CvApp extends LitElement {
       <main>
         <div class="sections">
           <top-section style="--section-bg:#ffffff;"></top-section>
-          <feedback-counter style="--section-bg:#efefef;"></feedback-counter>
-          <about-section style="--section-bg:#f0f0f0;"></about-section>
-          <experience-section style="--section-bg:#dfe9f8;"></experience-section>
-          <education-section style="--section-bg:#ffe9c9;"></education-section>
-          <skills-section style="--section-bg:#dff0e3;"></skills-section>
-          <contact-section style="--section-bg:#f8dede;"></contact-section>
+          <feedback-counter style="--section-bg:#ffffff;"></feedback-counter>
+          <about-section style="--section-bg:#bfe4ff;"></about-section>
+          <experience-section style="--section-bg:#bfe4ff;"></experience-section>
+          <education-section style="--section-bg:#bfe4ff;"></education-section>
+          <skills-section style="--section-bg:#bfe4ff;"></skills-section>
+          <contact-section style="--section-bg:#bfe4ff;"></contact-section>
         </div>
       </main>
       <unlock-celebration></unlock-celebration>

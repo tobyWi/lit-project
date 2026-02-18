@@ -21,12 +21,15 @@ export class FeedbackCounter extends LitElement {
 
     .panel {
       background: var(--section-bg, var(--surface-2));
+      border: 3px solid var(--border);
       border-radius: 0;
       padding: 1rem;
       display: grid;
       gap: 0.55rem;
       width: 100%;
       box-sizing: border-box;
+      box-shadow: 6px 6px 0 0 var(--border);
+      position: relative;
     }
 
     .title {
@@ -36,14 +39,16 @@ export class FeedbackCounter extends LitElement {
       align-items: baseline;
       gap: 0.6rem;
       color: var(--text-main);
-      font-size: 1.02rem;
-      font-weight: 700;
+      font-size: 1.08rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
     }
 
     .value {
       font-variant-numeric: tabular-nums;
       font-weight: 800;
-      font-size: 1.1rem;
+      font-size: 1.3rem;
       color: var(--accent);
     }
 

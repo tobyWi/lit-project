@@ -10,12 +10,10 @@ import {
   unlockContactMessage,
 } from "../../data/sections/contact-data";
 import "../../components/ui/section-card";
-import "../../data/cv-data";
 
 const SECTION_CARD_FEEDBACK_EVENT = "section-card-feedback";
 const CONTACT_UNLOCKED_EVENT = "contact-unlocked";
 
-// Assignment: contact section with email, LinkedIn, GitHub, and optional contact form trigger.
 @customElement("contact-section")
 export class ContactSection extends LitElement {
   @state() private soundsGoodTotal = 0;
@@ -97,7 +95,10 @@ export class ContactSection extends LitElement {
         ${hasRealLinkedIn
           ? html`<p>
               ${contactLabels.linkedin}:
-              <a href="${cvData.contact.linkedin}" target="_blank"
+              <a
+                href="${cvData.contact.linkedin}"
+                target="_blank"
+                rel="noopener noreferrer"
                 >${cvData.contact.linkedin}</a
               >
             </p>`
@@ -105,7 +106,10 @@ export class ContactSection extends LitElement {
         ${hasRealGitHub
           ? html`<p>
               ${contactLabels.github}:
-              <a href="${cvData.contact.github}" target="_blank"
+              <a
+                href="${cvData.contact.github}"
+                target="_blank"
+                rel="noopener noreferrer"
                 >${cvData.contact.github}</a
               >
             </p>`

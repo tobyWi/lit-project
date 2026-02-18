@@ -7,7 +7,6 @@ import {
 
 const SECTION_CARD_OPEN_EVENT = "section-card-opened";
 
-// Assignment: reusable UI wrapper for consistently styled CV sections with title and content slot.
 @customElement("section-card")
 export class SectionCard extends LitElement {
   @property({ type: String }) title = "";
@@ -22,12 +21,15 @@ export class SectionCard extends LitElement {
     :host {
       display: block;
       background: var(--section-bg, var(--surface));
-      border: 2px solid var(--border);
+      border: 3px solid var(--border);
       border-radius: var(--radius-lg);
       padding: var(--space-5);
-      box-shadow: 3px 3px 0 0 var(--border);
+      box-shadow: 6px 6px 0 0 var(--border);
       position: relative;
       overflow: visible;
+      transition:
+        transform 90ms linear,
+        box-shadow 90ms linear;
     }
 
     :host::before {
@@ -45,6 +47,16 @@ export class SectionCard extends LitElement {
       opacity: 1;
     }
 
+    :host(:not([locked])):hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0 0 var(--border);
+    }
+
+    :host([open]) {
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0 0 var(--border);
+    }
+
     :host([locked]) {
       opacity: 0.72;
       filter: saturate(0.85);
@@ -58,6 +70,11 @@ export class SectionCard extends LitElement {
       justify-content: space-between;
       cursor: pointer;
       margin: 0;
+    }
+
+    .header:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
     }
 
     h2 {
@@ -186,10 +203,14 @@ export class SectionCard extends LitElement {
       color: #fff;
     }
 
-    .feedback-btn:hover,
+    .feedback-btn:hover {
+      background: color-mix(in oklab, var(--surface-2), white 30%);
+    }
+
     .feedback-btn:focus-visible {
       background: color-mix(in oklab, var(--surface-2), white 30%);
-      outline: none;
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
     }
 
     .feedback-btn.good .icon {
