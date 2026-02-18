@@ -3,7 +3,7 @@ import { customElement } from "lit/decorators.js";
 import { cvData } from "../../data/cv-data";
 import { topSectionInstructionText } from "../../data/sections/top-section-data";
 
-const profileImageUrl = `${import.meta.env.BASE_URL}img/profile-pic.jpeg`;
+const profileImageUrl = `${import.meta.env.BASE_URL}img/profile-pic-2.jpg`;
 
 @customElement("top-section")
 export class TopSection extends LitElement {
