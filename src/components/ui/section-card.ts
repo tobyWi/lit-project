@@ -79,14 +79,18 @@ export class SectionCard extends LitElement {
     }
 
     .pending-hint {
-      margin: var(--space-4) 0 0;
-      text-align: right;
-      font-size: 0.82rem;
+      position: absolute;
+      top: -2px;
+      right: 0.9rem;
+      margin: 0;
+      font-size: 0.78rem;
       color: #1c1c1c;
       background: #cfcfcf;
-      padding: 0.28rem 0.55rem;
-      display: inline-block;
-      margin-left: auto;
+      border: 2px solid var(--border);
+      border-bottom: 0;
+      padding: 0.22rem 0.55rem;
+      line-height: 1.1;
+      z-index: 2;
     }
 
     .status-icon {
@@ -192,11 +196,40 @@ export class SectionCard extends LitElement {
       background: var(--accent);
     }
 
+    .feedback-btn.good:not(:disabled) {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--text-main);
+    }
+
     .feedback-btn.is-selected.good {
       border-color: var(--accent);
       background: var(--accent-soft);
       color: var(--text-main);
       font-weight: 600;
+    }
+
+    .feedback-btn:disabled {
+      cursor: not-allowed;
+      opacity: 1;
+      border-color: #9a9a9a;
+      background: #d7d7d7;
+      color: #5a5a5a;
+    }
+
+    .feedback-btn:disabled .icon {
+      background: #8a8a8a;
+    }
+
+    .feedback-btn.is-selected.good:disabled {
+      border-color: #9a9a9a;
+      background: #d7d7d7;
+      color: #5a5a5a;
+      font-weight: 600;
+    }
+
+    .feedback-btn.is-selected.good:disabled .icon {
+      background: #8a8a8a;
     }
 
     @media (max-width: 640px) {
@@ -291,6 +324,7 @@ export class SectionCard extends LitElement {
         : "";
 
     const isCompleted = this.selectedChoice === soundsGoodLabel;
+    const soundsGoodDisabled = isCompleted || this.locked;
 
     return html`
       <button
@@ -327,6 +361,7 @@ export class SectionCard extends LitElement {
                         ? "is-selected"
                         : ""}"
                       type="button"
+                      ?disabled=${soundsGoodDisabled}
                       aria-pressed=${String(this.selectedChoice === soundsGoodLabel)}
                       @click=${this.handleSoundsGoodClick}
                     >
