@@ -52,8 +52,6 @@ export class CvApp extends LitElement {
       max-width: 860px;
       width: 100%;
       margin: 0 auto;
-      --accordion-bg: #9efba9;
-      --panel-bg: #ffffff;
     }
 
     top-section,

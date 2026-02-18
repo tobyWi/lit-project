@@ -302,6 +302,20 @@ export class SectionCard extends LitElement {
     }
   };
 
+  private broadcastOpened() {
+    window.dispatchEvent(
+      new CustomEvent<{ source: SectionCard }>(SECTION_CARD_OPEN_EVENT, {
+        detail: { source: this },
+      }),
+    );
+  }
+
+  openCard() {
+    if (this.locked || this.open) return;
+    this.open = true;
+    this.broadcastOpened();
+  }
+
   private toggleOpen() {
     if (this.locked) return;
 
@@ -309,11 +323,7 @@ export class SectionCard extends LitElement {
     this.open = nextOpen;
 
     if (nextOpen) {
-      window.dispatchEvent(
-        new CustomEvent<{ source: SectionCard }>(SECTION_CARD_OPEN_EVENT, {
-          detail: { source: this },
-        }),
-      );
+      this.broadcastOpened();
     }
   }
 

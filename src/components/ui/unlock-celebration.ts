@@ -40,10 +40,10 @@ export class UnlockCelebration extends LitElement {
     .dialog {
       width: min(92vw, 520px);
       background: var(--surface);
-      border: 1px solid color-mix(in oklab, var(--accent), white 62%);
-      border-radius: 18px;
+      border: 3px solid var(--border);
+      border-radius: 0;
       padding: 1.2rem 1.1rem 1rem;
-      box-shadow: 0 28px 60px -32px rgba(11, 19, 13, 0.6);
+      box-shadow: 6px 6px 0 0 var(--border);
       position: relative;
       overflow: hidden;
       transform: translateY(10px) scale(0.98);

@@ -56,8 +56,18 @@ export class ContactSection extends LitElement {
 
     if (previousTotal < 4 && this.soundsGoodTotal >= 4) {
       window.dispatchEvent(new CustomEvent(CONTACT_UNLOCKED_EVENT));
+      void this.openContactCard();
     }
   };
+
+  private async openContactCard() {
+    await this.updateComplete;
+    const card = this.renderRoot.querySelector("section-card") as
+      | (HTMLElement & { openCard?: () => void })
+      | null;
+
+    card?.openCard?.();
+  }
 
   render() {
     const contactLocked = this.soundsGoodTotal < 4;
