@@ -4,5 +4,5 @@ export const soundsGoodieMeterProgressAriaLabel =
 export const contactUnlockedHint = "Contact unlocked.";
 
 export function getMeterRemainingHint(remaining: number): string {
-  return `Mark ${remaining} more with Sounds Good to unlock Contact.`;
+  return `You need ${remaining} more "Sounds Good" to unlock Contact.`;
 }
