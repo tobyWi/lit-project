@@ -25,8 +25,9 @@ export class SectionCard extends LitElement {
       border: 2px solid var(--border);
       border-radius: var(--radius-lg);
       padding: var(--space-5);
+      box-shadow: 3px 3px 0 0 var(--border);
       position: relative;
-      overflow: clip;
+      overflow: visible;
     }
 
     :host::before {
@@ -68,13 +69,24 @@ export class SectionCard extends LitElement {
     .title-row {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.8rem;
     }
 
     .choice {
       font-size: 0.92rem;
       color: var(--text-muted);
       font-weight: 500;
+    }
+
+    .pending-hint {
+      margin: var(--space-4) 0 0;
+      text-align: right;
+      font-size: 0.82rem;
+      color: #1c1c1c;
+      background: #cfcfcf;
+      padding: 0.28rem 0.55rem;
+      display: inline-block;
+      margin-left: auto;
     }
 
     .status-icon {
@@ -186,6 +198,30 @@ export class SectionCard extends LitElement {
       color: var(--text-main);
       font-weight: 600;
     }
+
+    @media (max-width: 640px) {
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      .choice {
+        font-size: 0.8rem;
+      }
+
+      .status-icon {
+        width: 1.05rem;
+        height: 1.05rem;
+        font-size: 0.76rem;
+      }
+
+      .title-row {
+        gap: 0.6rem;
+      }
+
+      .chevron {
+        font-size: 1.6rem;
+      }
+    }
   `;
 
   connectedCallback() {
@@ -251,7 +287,7 @@ export class SectionCard extends LitElement {
     const statusText = this.titleMeta
       ? this.titleMeta
       : this.showActions
-        ? this.selectedChoice || notClickedStatusText
+        ? this.selectedChoice
         : "";
 
     const isCompleted = this.selectedChoice === soundsGoodLabel;
@@ -303,6 +339,9 @@ export class SectionCard extends LitElement {
           </div>
         </div>
       </div>
+      ${this.showActions && !this.selectedChoice && !this.titleMeta
+        ? html`<p class="pending-hint">${notClickedStatusText}</p>`
+        : null}
     `;
   }
 }
