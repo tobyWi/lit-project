@@ -1,5 +1,9 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import {
+  notClickedStatusText,
+  soundsGoodLabel,
+} from "../../data/ui/section-card-text";
 
 const SECTION_CARD_OPEN_EVENT = "section-card-opened";
 
@@ -12,23 +16,15 @@ export class SectionCard extends LitElement {
   @property({ type: Boolean, reflect: true }) locked = false;
   @property({ type: Boolean }) showActions = true;
   @property({ type: Number }) soundsGoodCount = 0;
-  @property({ type: String }) selectedChoice: "Sounds Good" | "" = "";
+  @property({ type: String }) selectedChoice: typeof soundsGoodLabel | "" = "";
 
   static styles = css`
     :host {
       display: block;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(190, 255, 222, 0.65) 0%,
-          rgba(160, 244, 206, 0.35) 48%,
-          rgba(140, 236, 194, 0) 100%
-        ),
-        var(--surface);
-      border: 1px solid var(--border);
+      background: var(--surface);
+      border: 2px solid var(--border);
       border-radius: var(--radius-lg);
       padding: var(--space-5);
-      box-shadow: 0 8px 18px -14px rgba(23, 32, 21, 0.28);
       position: relative;
       overflow: clip;
     }
@@ -66,11 +62,12 @@ export class SectionCard extends LitElement {
     h2 {
       margin: 0;
       font-size: 1.6rem;
+      letter-spacing: 0.01em;
     }
 
     .title-row {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: 0.5rem;
     }
 
@@ -78,6 +75,28 @@ export class SectionCard extends LitElement {
       font-size: 0.92rem;
       color: var(--text-muted);
       font-weight: 500;
+    }
+
+    .status-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      border-radius: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.86rem;
+      line-height: 1;
+      background: var(--surface-2);
+      border: 2px solid var(--border);
+      filter: grayscale(1);
+      opacity: 0.65;
+    }
+
+    .status-icon.done {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      filter: none;
+      opacity: 1;
     }
 
     .chevron {
@@ -122,12 +141,12 @@ export class SectionCard extends LitElement {
     }
 
     .feedback-btn {
-      border: 1px solid var(--border);
-      border-radius: 999px;
+      border: 2px solid var(--border);
+      border-radius: 0;
       padding: 0.42rem 0.78rem;
       font: inherit;
       cursor: pointer;
-      background: color-mix(in oklab, var(--surface), var(--surface-2) 28%);
+      background: var(--surface-2);
       color: var(--text-muted);
       display: inline-flex;
       align-items: center;
@@ -141,7 +160,7 @@ export class SectionCard extends LitElement {
     .feedback-btn .icon {
       width: 1.2rem;
       height: 1.2rem;
-      border-radius: 999px;
+      border-radius: 0;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -162,9 +181,9 @@ export class SectionCard extends LitElement {
     }
 
     .feedback-btn.is-selected.good {
-      border-color: color-mix(in oklab, var(--accent), white 56%);
-      background: color-mix(in oklab, var(--accent-soft), white 14%);
-      color: color-mix(in oklab, var(--accent), black 20%);
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--text-main);
       font-weight: 600;
     }
   `;
@@ -209,14 +228,14 @@ export class SectionCard extends LitElement {
   }
 
   private handleSoundsGoodClick() {
-    if (this.selectedChoice === "Sounds Good") {
+    if (this.selectedChoice === soundsGoodLabel) {
       this.open = false;
       return;
     }
 
     const soundsGoodDelta = 1;
     this.soundsGoodCount = 1;
-    this.selectedChoice = "Sounds Good";
+    this.selectedChoice = soundsGoodLabel;
     this.open = false;
     window.dispatchEvent(
       new CustomEvent<{ soundsGoodDelta: number; nahDelta: number }>(
@@ -229,6 +248,14 @@ export class SectionCard extends LitElement {
   }
 
   render() {
+    const statusText = this.titleMeta
+      ? this.titleMeta
+      : this.showActions
+        ? this.selectedChoice || notClickedStatusText
+        : "";
+
+    const isCompleted = this.selectedChoice === soundsGoodLabel;
+
     return html`
       <button
         class="header"
@@ -238,11 +265,16 @@ export class SectionCard extends LitElement {
         @click=${this.toggleOpen}
       >
         <div class="title-row">
-          <h2>${this.title}</h2>
-          ${this.titleMeta || this.selectedChoice
-            ? html`<span class="choice"
-                >${this.titleMeta || this.selectedChoice}</span
+          ${this.showActions
+            ? html`<span
+                class="status-icon ${isCompleted ? "done" : ""}"
+                aria-hidden="true"
+                >👍</span
               >`
+            : null}
+          <h2>${this.title}</h2>
+          ${statusText
+            ? html`<span class="choice">${statusText}</span>`
             : null}
         </div>
         <span class="chevron" aria-hidden="true">›</span>
@@ -255,15 +287,15 @@ export class SectionCard extends LitElement {
               ? html`
                   <div class="actions">
                     <button
-                      class="feedback-btn good ${this.selectedChoice === "Sounds Good"
+                      class="feedback-btn good ${this.selectedChoice === soundsGoodLabel
                         ? "is-selected"
                         : ""}"
                       type="button"
-                      aria-pressed=${String(this.selectedChoice === "Sounds Good")}
+                      aria-pressed=${String(this.selectedChoice === soundsGoodLabel)}
                       @click=${this.handleSoundsGoodClick}
                     >
                       <span class="icon" aria-hidden="true">+</span>
-                      <span>Sounds Good</span>
+                      <span>${soundsGoodLabel}</span>
                     </button>
                   </div>
                 `

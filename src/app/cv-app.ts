@@ -1,5 +1,6 @@
 import "../components/layout/site-footer";
 import "../components/layout/feedback-counter";
+import "../components/ui/unlock-celebration";
 import "../components/sections/hero-section";
 import "../components/sections/about-section";
 import "../components/sections/experience-section";
@@ -47,7 +48,7 @@ export class CvApp extends LitElement {
 
     .sections {
       display: grid;
-      gap: var(--space-6);
+      gap: var(--space-5);
       max-width: 860px;
       width: 100%;
       margin: 0 auto;
@@ -69,6 +70,7 @@ export class CvApp extends LitElement {
           <contact-section></contact-section>
         </div>
       </main>
+      <unlock-celebration></unlock-celebration>
       <site-footer></site-footer>
     `;
   }

@@ -2,6 +2,10 @@ import { LitElement, css, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { cvData } from "../../data/cv-data";
 import {
+  contactLabels,
+  contactLockedMeta,
+  contactPlaceholderChecks,
+  contactTitle,
   referencesText,
   unlockContactMessage,
 } from "../../data/sections/contact-data";
@@ -9,6 +13,7 @@ import "../../components/ui/section-card";
 import "../../data/cv-data";
 
 const SECTION_CARD_FEEDBACK_EVENT = "section-card-feedback";
+const CONTACT_UNLOCKED_EVENT = "contact-unlocked";
 
 // Assignment: contact section with email, LinkedIn, GitHub, and optional contact form trigger.
 @customElement("contact-section")
@@ -52,21 +57,25 @@ export class ContactSection extends LitElement {
     );
 
     if (previousTotal < 4 && this.soundsGoodTotal >= 4) {
-      window.alert("Yaaay! You unlocked the contact section!");
+      window.dispatchEvent(new CustomEvent(CONTACT_UNLOCKED_EVENT));
     }
   };
 
   render() {
     const contactLocked = this.soundsGoodTotal < 4;
-    const titleMeta = contactLocked ? "Locked" : "";
-    const hasRealEmail = cvData.contact.email !== "you@example.com";
-    const hasRealLinkedIn = !cvData.contact.linkedin.includes("yourname");
-    const hasRealGitHub = !cvData.contact.github.includes("yourname");
+    const titleMeta = contactLocked ? contactLockedMeta : "";
+    const hasRealEmail = cvData.contact.email !== contactPlaceholderChecks.email;
+    const hasRealLinkedIn = !cvData.contact.linkedin.includes(
+      contactPlaceholderChecks.profileFragment,
+    );
+    const hasRealGitHub = !cvData.contact.github.includes(
+      contactPlaceholderChecks.profileFragment,
+    );
 
     return html`
       <section-card
         id="contact"
-        title="Contact"
+        .title=${contactTitle}
         .titleMeta=${titleMeta}
         ?locked=${contactLocked}
         .showActions=${false}
@@ -74,20 +83,20 @@ export class ContactSection extends LitElement {
         ${contactLocked
           ? html`<p>${unlockContactMessage}</p>`
           : null}
-        <p>Address: ${cvData.contact.location}</p>
+        <p>${contactLabels.address}: ${cvData.contact.location}</p>
         <p>
-          Phone:
+          ${contactLabels.phone}:
           <a href="tel:${cvData.contact.phone}">${cvData.contact.phone}</a>
         </p>
         ${hasRealEmail
           ? html`<p>
-              Email:
+              ${contactLabels.email}:
               <a href="mailto: ${cvData.contact.email}">${cvData.contact.email}</a>
             </p>`
           : null}
         ${hasRealLinkedIn
           ? html`<p>
-              LinkedIn:
+              ${contactLabels.linkedin}:
               <a href="${cvData.contact.linkedin}" target="_blank"
                 >${cvData.contact.linkedin}</a
               >
@@ -95,7 +104,7 @@ export class ContactSection extends LitElement {
           : null}
         ${hasRealGitHub
           ? html`<p>
-              GitHub:
+              ${contactLabels.github}:
               <a href="${cvData.contact.github}" target="_blank"
                 >${cvData.contact.github}</a
               >

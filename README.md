@@ -1,26 +1,61 @@
-# Lit CV Project Structure
+# lit-project
 
-This is a starter structure for a Lit-based CV website.
-Each component file currently contains only an assignment comment so you can implement everything yourself.
+Interactive CV/portfolio built with Lit + TypeScript + Vite.
 
-## Suggested structure
+## What This Repo Is
 
-- src/main.ts
-- src/app/cv-app.ts
-- src/components/layout/site-header.ts
-- src/components/layout/site-footer.ts
-- src/components/sections/hero-section.ts
-- src/components/sections/about-section.ts
-- src/components/sections/experience-section.ts
-- src/components/sections/projects-section.ts
-- src/components/sections/skills-section.ts
-- src/components/sections/education-section.ts
-- src/components/sections/contact-section.ts
-- src/components/ui/section-card.ts
-- src/components/ui/skill-badge.ts
-- src/components/ui/timeline-item.ts
-- src/components/ui/project-card.ts
-- src/data/cv-data.ts
-- src/types/cv.ts
-- src/styles/tokens.css
-- src/styles/global.css
+- Personal CV site
+- Component-based Lit application
+- Data-driven content (section copy is stored under `src/data`)
+- GitHub Pages deployment via GitHub Actions
+
+## Tech Stack
+
+- Lit
+- TypeScript
+- Vite
+- pnpm
+
+## Install
+
+```bash
+pnpm install
+```
+
+## Run Locally
+
+```bash
+pnpm dev
+```
+
+## Type Check
+
+```bash
+pnpm check
+```
+
+## Production Build
+
+```bash
+pnpm build
+```
+
+## Deploy (GitHub Pages)
+
+Deployment is automated through:
+
+- `.github/workflows/deploy.yml`
+
+Current trigger:
+
+- push to `master`
+
+The workflow builds and publishes `dist/` to GitHub Pages.
+
+## Content/Data
+
+Most text content is centralized in:
+
+- `src/data/cv-data.ts`
+- `src/data/sections/*`
+- `src/data/ui/*`

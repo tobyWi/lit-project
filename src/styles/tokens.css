@@ -1,10 +1,10 @@
 :root {
-  --bg: #f5f7f5;
+  --bg: #f6f6f6;
   --surface: #ffffff;
-  --surface-2: #edf1ea;
-  --text-main: #172015;
-  --text-muted: #4f5f4b;
-  --border: #d7dfd2;
+  --surface-2: #ececec;
+  --text-main: #111111;
+  --text-muted: #2c2c2c;
+  --border: #111111;
   --accent: #2c7a48;
   --accent-soft: #ddf2e4;
 
@@ -14,6 +14,6 @@
   --space-8: 2rem;
   --space-12: 3rem;
 
-  --radius-lg: 14px;
+  --radius-lg: 0px;
   --content-max-width: 980px;
 }

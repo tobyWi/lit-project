@@ -1,7 +1,10 @@
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import "../../components/ui/section-card";
-import { experienceItems } from "../../data/sections/experience-data";
+import {
+  experienceItems,
+  experienceTitle,
+} from "../../data/sections/experience-data";
 
 @customElement("experience-section")
 export class ExperienceSection extends LitElement {
@@ -31,7 +34,7 @@ export class ExperienceSection extends LitElement {
 
   render() {
     return html`
-      <section-card id="experience" title="Work Experience">
+      <section-card id="experience" .title=${experienceTitle}>
         ${experienceItems.map(
           (item) => html`
             <article class="item">

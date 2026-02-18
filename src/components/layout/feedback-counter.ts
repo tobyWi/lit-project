@@ -1,11 +1,18 @@
 import { LitElement, css, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
+import {
+  contactUnlockedHint,
+  getMeterRemainingHint,
+  soundsGoodieMeterProgressAriaLabel,
+  soundsGoodieMeterTitle,
+} from "../../data/ui/feedback-counter-text";
 
 const SECTION_CARD_FEEDBACK_EVENT = "section-card-feedback";
 
 @customElement("feedback-counter")
 export class FeedbackCounter extends LitElement {
   @state() private soundsGoodTotal = 0;
+  private readonly unlockTarget = 4;
 
   static styles = css`
     :host {
@@ -13,40 +20,51 @@ export class FeedbackCounter extends LitElement {
     }
 
     .panel {
-      border: 1px solid color-mix(in oklab, var(--accent), white 72%);
-      background: color-mix(in oklab, var(--accent-soft), white 28%);
-      color: color-mix(in oklab, var(--accent), black 20%);
-      border-radius: var(--radius-lg);
-      padding: 1rem 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 700;
-      font-size: 1.08rem;
+      background: var(--surface-2);
+      border-radius: 0;
+      padding: 1rem;
+      display: grid;
+      gap: 0.55rem;
       width: 100%;
       box-sizing: border-box;
-      justify-content: center;
-      white-space: nowrap;
     }
 
-    .icon {
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.08rem;
-      line-height: 1;
+    .title {
+      margin: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.6rem;
+      color: var(--text-main);
+      font-size: 1.02rem;
       font-weight: 700;
-      color: #fff;
-      background: var(--accent);
     }
 
     .value {
       font-variant-numeric: tabular-nums;
       font-weight: 800;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+
+    .track {
+      height: 0.7rem;
+      border-radius: 0;
+      background: #cfcfcf;
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--accent);
+      transition: width 220ms ease;
+    }
+
+    .hint {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.92rem;
     }
   `;
 
@@ -76,10 +94,31 @@ export class FeedbackCounter extends LitElement {
   };
 
   render() {
+    const clampedTotal = Math.max(0, this.soundsGoodTotal);
+    const progress = Math.min(clampedTotal / this.unlockTarget, 1);
+    const remaining = Math.max(this.unlockTarget - clampedTotal, 0);
+
     return html`
       <div class="panel" aria-live="polite">
-        <span class="icon" aria-hidden="true">+</span>
-        Sounds Goodie-Meter <span class="value">${this.soundsGoodTotal}</span>
+        <p class="title">
+          <span>${soundsGoodieMeterTitle}</span>
+          <span class="value">${clampedTotal}/${this.unlockTarget}</span>
+        </p>
+        <div
+          class="track"
+          role="progressbar"
+          aria-label=${soundsGoodieMeterProgressAriaLabel}
+          aria-valuemin="0"
+          aria-valuemax=${String(this.unlockTarget)}
+          aria-valuenow=${String(Math.min(clampedTotal, this.unlockTarget))}
+        >
+          <div class="fill" style=${`width:${progress * 100}%`}></div>
+        </div>
+        <p class="hint">
+          ${remaining > 0
+            ? getMeterRemainingHint(remaining)
+            : contactUnlockedHint}
+        </p>
       </div>
     `;
   }

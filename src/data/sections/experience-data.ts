@@ -4,6 +4,8 @@ export interface ExperienceItem {
   summary: string;
 }
 
+export const experienceTitle = "Work Experience";
+
 export const experienceItems: ExperienceItem[] = [
   {
     role: "Frontend Developer - Intersport, Gothenburg",

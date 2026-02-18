@@ -1,0 +1,2 @@
+export const soundsGoodLabel = "Sounds Good" as const;
+export const notClickedStatusText = "Not clicked yet";

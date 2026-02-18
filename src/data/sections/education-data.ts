@@ -3,6 +3,8 @@ export interface EducationItem {
   period: string;
 }
 
+export const educationTitle = "Education";
+
 export const educationItems: EducationItem[] = [
   {
     degree: "Web Development CMS - IT-högskolan, Gothenburg",

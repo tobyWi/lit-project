@@ -1,7 +1,7 @@
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import "../../components/ui/section-card";
-import { skillGroups } from "../../data/sections/skills-data";
+import { skillGroups, skillsTitle } from "../../data/sections/skills-data";
 
 @customElement("skills-section")
 export class SkillsSection extends LitElement {
@@ -33,7 +33,7 @@ export class SkillsSection extends LitElement {
 
   render() {
     return html`
-      <section-card id="skills" title="Tech Skills">
+      <section-card id="skills" .title=${skillsTitle}>
         ${skillGroups.map(
           (group) => html`
             <section class="group">

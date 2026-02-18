@@ -1,6 +1,7 @@
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { cvData } from "../../data/cv-data";
+import { heroInstructionText } from "../../data/sections/hero-data";
 
 const profileImageUrl = `${import.meta.env.BASE_URL}img/profile-pic.jpeg`;
 
@@ -10,7 +11,7 @@ export class HeroSection extends LitElement {
     :host {
       display: block;
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 2px solid var(--border);
       border-radius: var(--radius-lg);
       padding: var(--space-5);
     }
@@ -37,9 +38,9 @@ export class HeroSection extends LitElement {
       width: 100%;
       aspect-ratio: 1 / 1;
       object-fit: cover;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      box-shadow: 0 10px 22px -16px rgba(23, 32, 21, 0.32);
+      border-radius: 0;
+      border: 2px solid var(--border);
+      box-shadow: none;
     }
 
     @media (max-width: 760px) {
@@ -57,14 +58,7 @@ export class HeroSection extends LitElement {
             <h1>${cvData.name}</h1>
             <p>${cvData.title}</p>
             <p>${cvData.summary}</p>
-            <p>
-              Explore the sections below and click
-              <strong>Sounds Good</strong> on the ones you like.
-            </p>
-            <p>
-              Once the <strong>Sounds Goodie-Meter</strong> reaches
-              <strong>4</strong>, the Contact section unlocks.
-            </p>
+            <p>${heroInstructionText}</p>
           </div>
           <img
             class="photo"

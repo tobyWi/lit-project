@@ -3,6 +3,8 @@ export interface SkillGroup {
   items: string[];
 }
 
+export const skillsTitle = "Tech Skills";
+
 export const skillGroups: SkillGroup[] = [
   {
     title: "Frontend",
