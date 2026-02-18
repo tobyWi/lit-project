@@ -142,7 +142,7 @@ export class SectionCard extends LitElement {
     }
 
     .content-slot {
-      padding-top: var(--space-3);
+      padding-top: var(--space-5);
     }
 
     .actions {
