@@ -2,6 +2,7 @@ import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { cvData } from "../../data/cv-data";
 import {
+  footerBuiltWithText,
   footerRepoLabel,
   footerRepoUrl,
   footerSuffix,
@@ -33,6 +34,7 @@ export class SiteFooter extends LitElement {
     return html`
       <p>
         &copy; ${new Date().getFullYear()} ${cvData.name}. ${footerSuffix}
+        ${footerBuiltWithText}
         <a href=${footerRepoUrl} target="_blank" rel="noopener noreferrer"
           >${footerRepoLabel}</a
         >
