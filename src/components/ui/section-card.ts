@@ -99,7 +99,7 @@ export class SectionCard extends LitElement {
     .pending-hint {
       position: absolute;
       top: -2px;
-      right: 0.9rem;
+      right: -2px;
       margin: 0;
       font-size: 0.78rem;
       color: #1c1c1c;
