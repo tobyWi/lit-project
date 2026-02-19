@@ -1,6 +1,7 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import {
+  approvedStatusText,
   notClickedStatusText,
   soundsGoodLabel,
 } from "../../data/ui/section-card-text";
@@ -104,12 +105,24 @@ export class SectionCard extends LitElement {
       margin: 0;
       font-size: 0.78rem;
       color: #ffffff;
-      background: #4a4a4a;
+      background: #111111;
       border: 2px solid var(--border);
       border-bottom: 0;
+      text-shadow: 1px 0 0 rgba(255, 255, 255, 0.35);
+      box-shadow: -2px 2px 0 rgba(0, 0, 0, 0.35);
       padding: 0.22rem 0.55rem;
       line-height: 1.1;
       z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .clip-thumb {
+      font-size: 0.75rem;
+      line-height: 1;
+      display: inline-block;
+      transform: translateY(-0.02rem);
     }
 
     .status-icon {
@@ -345,14 +358,12 @@ export class SectionCard extends LitElement {
   }
 
   render() {
-    const statusText = this.titleMeta
-      ? this.titleMeta
-      : this.showActions
-        ? this.selectedChoice
-        : "";
+    const statusText = this.titleMeta ? this.titleMeta : "";
 
     const isCompleted = this.selectedChoice === soundsGoodLabel;
     const soundsGoodDisabled = isCompleted || this.locked;
+    const showClip = this.showActions && !this.titleMeta;
+    const clipText = isCompleted ? approvedStatusText : notClickedStatusText;
 
     return html`
       <button
@@ -363,13 +374,6 @@ export class SectionCard extends LitElement {
         @click=${this.toggleOpen}
       >
         <div class="title-row">
-          ${this.showActions
-            ? html`<span
-                class="status-icon ${isCompleted ? "done" : ""}"
-                aria-hidden="true"
-                >👍</span
-              >`
-            : null}
           <h2>${this.title}</h2>
           ${statusText
             ? html`<span class="choice">${statusText}</span>`
@@ -402,8 +406,11 @@ export class SectionCard extends LitElement {
           </div>
         </div>
       </div>
-      ${this.showActions && !this.selectedChoice && !this.titleMeta
-        ? html`<p class="pending-hint">${notClickedStatusText}</p>`
+      ${showClip
+        ? html`<p class="pending-hint">
+            ${clipText}
+            ${isCompleted ? html`<span class="clip-thumb">👍</span>` : null}
+          </p>`
         : null}
     `;
   }
