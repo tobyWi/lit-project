@@ -8,7 +8,7 @@ export const cvData: CvData = {
   contact: {
     email: "tobias.wiklund@gmail.com",
     github: "https://github.com/yourname",
-    linkedin: "https://linkedin.com/in/yourname",
+    linkedin: "https://www.linkedin.com/in/tobias-wiklund-6a879887/",
     location: "Nils Dahlbecks gata 11, 41249 Göteborg",
     phone: "0702203342",
   },
