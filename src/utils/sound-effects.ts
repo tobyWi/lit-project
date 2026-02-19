@@ -103,3 +103,27 @@ export function playUnlockFanfare() {
     }
   });
 }
+
+export function playHelloChime() {
+  withContext((ctx, now) => {
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.05, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+    gain.connect(ctx.destination);
+
+    const oscA = ctx.createOscillator();
+    oscA.type = "sine";
+    oscA.frequency.setValueAtTime(587.33, now);
+    oscA.connect(gain);
+    oscA.start(now);
+    oscA.stop(now + 0.09);
+
+    const oscB = ctx.createOscillator();
+    oscB.type = "triangle";
+    oscB.frequency.setValueAtTime(783.99, now + 0.08);
+    oscB.connect(gain);
+    oscB.start(now + 0.08);
+    oscB.stop(now + 0.18);
+  });
+}
