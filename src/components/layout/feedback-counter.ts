@@ -6,13 +6,13 @@ import {
   soundsGoodieMeterProgressAriaLabel,
   soundsGoodieMeterTitle,
 } from "../../data/ui/feedback-counter-text";
-
-const SECTION_CARD_FEEDBACK_EVENT = "section-card-feedback";
+import { appStore, type AppState } from "../../state/app-store";
 
 @customElement("feedback-counter")
 export class FeedbackCounter extends LitElement {
   @state() private soundsGoodTotal = 0;
-  private readonly unlockTarget = 4;
+  private readonly unlockTarget = appStore.unlockTarget;
+  private unsubscribeStore?: () => void;
 
   static styles = css`
     :host {
@@ -75,27 +75,16 @@ export class FeedbackCounter extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    window.addEventListener(
-      SECTION_CARD_FEEDBACK_EVENT,
-      this.handleFeedback as EventListener,
-    );
+    this.unsubscribeStore = appStore.subscribe(this.syncFromStore);
   }
 
   disconnectedCallback() {
-    window.removeEventListener(
-      SECTION_CARD_FEEDBACK_EVENT,
-      this.handleFeedback as EventListener,
-    );
+    this.unsubscribeStore?.();
     super.disconnectedCallback();
   }
 
-  private handleFeedback = (
-    event: CustomEvent<{ soundsGoodDelta: number; nahDelta: number }>,
-  ) => {
-    this.soundsGoodTotal = Math.max(
-      0,
-      this.soundsGoodTotal + event.detail.soundsGoodDelta,
-    );
+  private syncFromStore = (state: AppState) => {
+    this.soundsGoodTotal = state.soundsGoodTotal;
   };
 
   render() {

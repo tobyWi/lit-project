@@ -6,12 +6,13 @@ import {
   unlockDialogButtonText,
   unlockDialogTitle,
 } from "../../data/ui/unlock-celebration-text";
-
-const CONTACT_UNLOCKED_EVENT = "contact-unlocked";
+import { appStore, type AppState } from "../../state/app-store";
 
 @customElement("unlock-celebration")
 export class UnlockCelebration extends LitElement {
   @state() private open = false;
+  private seenUnlockVersion = 0;
+  private unsubscribeStore?: () => void;
 
   static styles = css`
     :host {
@@ -133,21 +134,21 @@ export class UnlockCelebration extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    window.addEventListener(
-      CONTACT_UNLOCKED_EVENT,
-      this.handleUnlocked as EventListener,
-    );
+    this.seenUnlockVersion = appStore.getState().unlockVersion;
+    this.unsubscribeStore = appStore.subscribe(this.syncFromStore);
   }
 
   disconnectedCallback() {
-    window.removeEventListener(
-      CONTACT_UNLOCKED_EVENT,
-      this.handleUnlocked as EventListener,
-    );
+    this.unsubscribeStore?.();
     super.disconnectedCallback();
   }
 
-  private handleUnlocked = () => {
+  private syncFromStore = (state: AppState) => {
+    if (state.unlockVersion <= this.seenUnlockVersion) {
+      return;
+    }
+
+    this.seenUnlockVersion = state.unlockVersion;
     this.open = true;
     this.toggleAttribute("data-open", true);
   };

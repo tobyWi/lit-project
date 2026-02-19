@@ -7,7 +7,7 @@ import { aboutParagraphs, aboutTitle } from "../../data/sections/about-data";
 export class AboutSection extends LitElement {
   render() {
     return html`
-      <section-card id="about" .title=${aboutTitle}>
+      <section-card id="about" .cardId=${"about"} .title=${aboutTitle}>
         ${aboutParagraphs.map((paragraph) => html`<p>${paragraph}</p>`)}
       </section-card>
     `;

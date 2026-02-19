@@ -34,7 +34,11 @@ export class ExperienceSection extends LitElement {
 
   render() {
     return html`
-      <section-card id="experience" .title=${experienceTitle}>
+      <section-card
+        id="experience"
+        .cardId=${"experience"}
+        .title=${experienceTitle}
+      >
         ${experienceItems.map(
           (item) => html`
             <article class="item">

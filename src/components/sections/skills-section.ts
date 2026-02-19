@@ -33,7 +33,7 @@ export class SkillsSection extends LitElement {
 
   render() {
     return html`
-      <section-card id="skills" .title=${skillsTitle}>
+      <section-card id="skills" .cardId=${"skills"} .title=${skillsTitle}>
         ${skillGroups.map(
           (group) => html`
             <section class="group">

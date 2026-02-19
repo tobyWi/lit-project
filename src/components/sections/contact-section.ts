@@ -10,13 +10,12 @@ import {
   unlockContactMessage,
 } from "../../data/sections/contact-data";
 import "../../components/ui/section-card";
-
-const SECTION_CARD_FEEDBACK_EVENT = "section-card-feedback";
-const CONTACT_UNLOCKED_EVENT = "contact-unlocked";
+import { appStore, type AppState } from "../../state/app-store";
 
 @customElement("contact-section")
 export class ContactSection extends LitElement {
-  @state() private soundsGoodTotal = 0;
+  @state() private contactLocked = true;
+  private unsubscribeStore?: () => void;
 
   static styles = css`
     a {
@@ -31,47 +30,20 @@ export class ContactSection extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    window.addEventListener(
-      SECTION_CARD_FEEDBACK_EVENT,
-      this.handleFeedback as EventListener,
-    );
+    this.unsubscribeStore = appStore.subscribe(this.syncFromStore);
   }
 
   disconnectedCallback() {
-    window.removeEventListener(
-      SECTION_CARD_FEEDBACK_EVENT,
-      this.handleFeedback as EventListener,
-    );
+    this.unsubscribeStore?.();
     super.disconnectedCallback();
   }
 
-  private handleFeedback = (
-    event: CustomEvent<{ soundsGoodDelta: number; nahDelta: number }>,
-  ) => {
-    const previousTotal = this.soundsGoodTotal;
-    this.soundsGoodTotal = Math.max(
-      0,
-      this.soundsGoodTotal + event.detail.soundsGoodDelta,
-    );
-
-    if (previousTotal < 4 && this.soundsGoodTotal >= 4) {
-      window.dispatchEvent(new CustomEvent(CONTACT_UNLOCKED_EVENT));
-      void this.openContactCard();
-    }
+  private syncFromStore = (state: AppState) => {
+    this.contactLocked = !state.contactUnlocked;
   };
 
-  private async openContactCard() {
-    await this.updateComplete;
-    const card = this.renderRoot.querySelector("section-card") as
-      | (HTMLElement & { openCard?: () => void })
-      | null;
-
-    card?.openCard?.();
-  }
-
   render() {
-    const contactLocked = this.soundsGoodTotal < 4;
-    const titleMeta = contactLocked ? contactLockedMeta : "";
+    const titleMeta = this.contactLocked ? contactLockedMeta : "";
     const hasRealEmail = cvData.contact.email !== contactPlaceholderChecks.email;
     const hasRealLinkedIn = !cvData.contact.linkedin.includes(
       contactPlaceholderChecks.profileFragment,
@@ -83,12 +55,13 @@ export class ContactSection extends LitElement {
     return html`
       <section-card
         id="contact"
+        .cardId=${"contact"}
         .title=${contactTitle}
         .titleMeta=${titleMeta}
-        ?locked=${contactLocked}
+        ?locked=${this.contactLocked}
         .showActions=${false}
       >
-        ${contactLocked
+        ${this.contactLocked
           ? html`<p>${unlockContactMessage}</p>`
           : null}
         <p>${contactLabels.address}: ${cvData.contact.location}</p>

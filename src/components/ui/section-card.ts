@@ -4,18 +4,19 @@ import {
   notClickedStatusText,
   soundsGoodLabel,
 } from "../../data/ui/section-card-text";
-
-const SECTION_CARD_OPEN_EVENT = "section-card-opened";
+import { appStore, type AppState } from "../../state/app-store";
 
 @customElement("section-card")
 export class SectionCard extends LitElement {
   @property({ type: String }) title = "";
+  @property({ type: String }) cardId = "";
   @property({ type: String }) titleMeta = "";
   @property({ type: Boolean, reflect: true }) open = false;
   @property({ type: Boolean, reflect: true }) locked = false;
   @property({ type: Boolean }) showActions = true;
   @property({ type: Number }) soundsGoodCount = 0;
   @property({ type: String }) selectedChoice: typeof soundsGoodLabel | "" = "";
+  private unsubscribeStore?: () => void;
 
   static styles = css`
     :host {
@@ -280,71 +281,53 @@ export class SectionCard extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    window.addEventListener(
-      SECTION_CARD_OPEN_EVENT,
-      this.handleOtherCardOpened as EventListener,
-    );
+    this.unsubscribeStore = appStore.subscribe(this.syncFromStore);
   }
 
   disconnectedCallback() {
-    window.removeEventListener(
-      SECTION_CARD_OPEN_EVENT,
-      this.handleOtherCardOpened as EventListener,
-    );
+    this.unsubscribeStore?.();
     super.disconnectedCallback();
   }
 
-  private handleOtherCardOpened = (
-    event: CustomEvent<{ source: SectionCard }>,
-  ) => {
-    if (event.detail.source !== this) {
-      this.open = false;
-    }
-  };
-
-  private broadcastOpened() {
-    window.dispatchEvent(
-      new CustomEvent<{ source: SectionCard }>(SECTION_CARD_OPEN_EVENT, {
-        detail: { source: this },
-      }),
-    );
+  private get effectiveCardId() {
+    return this.cardId || this.id || "";
   }
 
+  private syncFromStore = (state: AppState) => {
+    const id = this.effectiveCardId;
+    if (!id) return;
+
+    const isCompleted = state.markedSectionIds.has(id);
+    this.selectedChoice = isCompleted ? soundsGoodLabel : "";
+    this.soundsGoodCount = isCompleted ? 1 : 0;
+    this.open = state.openCardId === id;
+  };
+
   openCard() {
-    if (this.locked || this.open) return;
-    this.open = true;
-    this.broadcastOpened();
+    if (this.locked) return;
+    appStore.setOpenCard(this.effectiveCardId);
   }
 
   private toggleOpen() {
     if (this.locked) return;
-
-    const nextOpen = !this.open;
-    this.open = nextOpen;
-
-    if (nextOpen) {
-      this.broadcastOpened();
-    }
+    appStore.setOpenCard(this.open ? null : this.effectiveCardId);
   }
 
   private handleSoundsGoodClick() {
     if (this.selectedChoice === soundsGoodLabel) {
-      this.open = false;
+      appStore.setOpenCard(null);
       return;
     }
 
-    const soundsGoodDelta = 1;
-    this.soundsGoodCount = 1;
-    this.selectedChoice = soundsGoodLabel;
-    this.open = false;
-    window.dispatchEvent(
-      new CustomEvent<{ soundsGoodDelta: number; nahDelta: number }>(
-        "section-card-feedback",
-        {
-          detail: { soundsGoodDelta, nahDelta: 0 },
-        },
-      ),
-    );
+    const wasContactUnlocked = appStore.getState().contactUnlocked;
+    const wasMarked = appStore.markSectionSoundsGood(this.effectiveCardId);
+    if (wasMarked) {
+      const isContactUnlocked = appStore.getState().contactUnlocked;
+      const unlockedNow = !wasContactUnlocked && isContactUnlocked;
+      if (!unlockedNow) {
+        appStore.setOpenCard(null);
+      }
+    }
   }
 
   render() {
