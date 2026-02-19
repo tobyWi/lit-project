@@ -21,8 +21,19 @@ export class SiteFooter extends LitElement {
 
     p {
       margin: 0;
-      color: var(--text-muted);
+      color: var(--text-main);
       font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .copyright {
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+    }
+
+    .meta {
+      color: var(--text-muted);
     }
 
     a {
@@ -33,8 +44,10 @@ export class SiteFooter extends LitElement {
   render() {
     return html`
       <p>
-        &copy; ${new Date().getFullYear()} ${cvData.name}. ${footerSuffix}
-        ${footerBuiltWithText}
+        <span class="copyright"
+          >&copy; ${new Date().getFullYear()} ${cvData.name}</span
+        >
+        <span class="meta"> ${footerSuffix} ${footerBuiltWithText} </span>
         <a href=${footerRepoUrl} target="_blank" rel="noopener noreferrer"
           >${footerRepoLabel}</a
         >
