@@ -47,7 +47,7 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
-    title: "Familiar With",
+    title: "Somewhat familiar with",
     items: ["Photoshop", "AWS", "Cloudflare"],
   },
 ];
