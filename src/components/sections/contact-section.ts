@@ -69,6 +69,8 @@ export class ContactSection extends LitElement {
 
     .dialog {
       width: min(calc(100vw - (var(--space-4) * 2) - 28px), 820px);
+      max-height: calc(100dvh - (var(--space-4) * 2));
+      overflow: auto;
       box-sizing: border-box;
       background: var(--surface);
       border: 3px solid var(--border);
@@ -80,9 +82,8 @@ export class ContactSection extends LitElement {
 
     .dialog-head {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.8rem;
+      justify-content: flex-start;
+      align-items: flex-start;
     }
 
     .dialog-title {
@@ -93,23 +94,64 @@ export class ContactSection extends LitElement {
     }
 
     .close-btn {
-      border: 2px solid var(--border);
-      background: var(--surface-2);
+      margin-top: 0.4rem;
+      border: 2px solid var(--accent);
+      background: var(--accent-soft);
       color: var(--text-main);
-      border-radius: 0;
       font: inherit;
-      font-weight: 700;
-      padding: 0.2rem 0.55rem;
+      font-weight: 600;
+      border-radius: 0;
+      padding: 0.42rem 0.78rem;
       cursor: pointer;
+      justify-self: start;
+      transition:
+        background-color 120ms ease,
+        border-color 120ms ease,
+        color 120ms ease;
+    }
+
+    .close-btn:hover {
+      background: color-mix(in oklab, var(--accent-soft), white 26%);
     }
 
     .close-btn:focus-visible {
+      background: color-mix(in oklab, var(--accent-soft), white 26%);
       outline: 3px solid var(--accent);
       outline-offset: 2px;
     }
 
     .row {
       margin: 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .field {
+      display: grid;
+      gap: 0.12rem;
+    }
+
+    .field-label {
+      margin: 0;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .field-value {
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 520px) {
+      .dialog {
+        width: calc(100vw - (var(--space-4) * 2));
+        padding: var(--space-4);
+      }
+
+      .dialog-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
 
     a {
@@ -197,46 +239,60 @@ export class ContactSection extends LitElement {
               >
                 <div class="dialog-head">
                   <h3 class="dialog-title">${contactTitle}</h3>
-                  <button class="close-btn" type="button" @click=${this.closeModal}>
-                    Close
-                  </button>
                 </div>
-                <p class="row">${contactLabels.address}: ${cvData.contact.location}</p>
-                <p class="row">
-                  ${contactLabels.phone}:
-                  <a href="tel:${cvData.contact.phone}">${cvData.contact.phone}</a>
-                </p>
+                <div class="row field">
+                  <p class="field-label">${contactLabels.address}</p>
+                  <p class="field-value">${cvData.contact.location}</p>
+                </div>
+                <div class="row field">
+                  <p class="field-label">${contactLabels.phone}</p>
+                  <p class="field-value">
+                    <a href="tel:${cvData.contact.phone}">${cvData.contact.phone}</a>
+                  </p>
+                </div>
                 ${hasRealEmail
-                  ? html`<p class="row">
-                      ${contactLabels.email}:
-                      <a href="mailto:${cvData.contact.email}"
-                        >${cvData.contact.email}</a
-                      >
-                    </p>`
+                  ? html`<div class="row field">
+                      <p class="field-label">${contactLabels.email}</p>
+                      <p class="field-value">
+                        <a href="mailto:${cvData.contact.email}"
+                          >${cvData.contact.email}</a
+                        >
+                      </p>
+                    </div>`
                   : null}
                 ${hasRealLinkedIn
-                  ? html`<p class="row">
-                      ${contactLabels.linkedin}:
-                      <a
-                        href="${cvData.contact.linkedin}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >${cvData.contact.linkedin}</a
-                      >
-                    </p>`
+                  ? html`<div class="row field">
+                      <p class="field-label">${contactLabels.linkedin}</p>
+                      <p class="field-value">
+                        <a
+                          href="${cvData.contact.linkedin}"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          >${cvData.contact.linkedin}</a
+                        >
+                      </p>
+                    </div>`
                   : null}
                 ${hasRealGitHub
-                  ? html`<p class="row">
-                      ${contactLabels.github}:
-                      <a
-                        href="${cvData.contact.github}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >${cvData.contact.github}</a
-                      >
-                    </p>`
+                  ? html`<div class="row field">
+                      <p class="field-label">${contactLabels.github}</p>
+                      <p class="field-value">
+                        <a
+                          href="${cvData.contact.github}"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          >${cvData.contact.github}</a
+                        >
+                      </p>
+                    </div>`
                   : null}
-                <p class="row">${referencesText}</p>
+                <div class="row field">
+                  <p class="field-label">References</p>
+                  <p class="field-value">${referencesText}</p>
+                </div>
+                <button class="close-btn" type="button" @click=${this.closeModal}>
+                  Got it!
+                </button>
               </div>
             </div>
           `
