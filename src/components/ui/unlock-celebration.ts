@@ -7,6 +7,7 @@ import {
   unlockDialogTitle,
 } from "../../data/ui/unlock-celebration-text";
 import { appStore, type AppState } from "../../state/app-store";
+import { playUnlockFanfare } from "../../utils/sound-effects";
 
 @customElement("unlock-celebration")
 export class UnlockCelebration extends LitElement {
@@ -149,6 +150,7 @@ export class UnlockCelebration extends LitElement {
     }
 
     this.seenUnlockVersion = state.unlockVersion;
+    playUnlockFanfare();
     this.open = true;
     this.toggleAttribute("data-open", true);
   };

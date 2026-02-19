@@ -7,12 +7,14 @@ import {
   soundsGoodieMeterTitle,
 } from "../../data/ui/feedback-counter-text";
 import { appStore, type AppState } from "../../state/app-store";
+import { playMeterRiseTick } from "../../utils/sound-effects";
 
 @customElement("feedback-counter")
 export class FeedbackCounter extends LitElement {
   @state() private soundsGoodTotal = 0;
   private readonly unlockTarget = appStore.unlockTarget;
   private unsubscribeStore?: () => void;
+  private prevSoundsGoodTotal = 0;
 
   static styles = css`
     :host {
@@ -84,6 +86,13 @@ export class FeedbackCounter extends LitElement {
   }
 
   private syncFromStore = (state: AppState) => {
+    if (
+      state.soundsGoodTotal > this.prevSoundsGoodTotal &&
+      state.soundsGoodTotal < this.unlockTarget
+    ) {
+      playMeterRiseTick(state.soundsGoodTotal);
+    }
+    this.prevSoundsGoodTotal = state.soundsGoodTotal;
     this.soundsGoodTotal = state.soundsGoodTotal;
   };
 

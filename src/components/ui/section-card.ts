@@ -5,6 +5,7 @@ import {
   soundsGoodLabel,
 } from "../../data/ui/section-card-text";
 import { appStore, type AppState } from "../../state/app-store";
+import { playAccordionPop } from "../../utils/sound-effects";
 
 @customElement("section-card")
 export class SectionCard extends LitElement {
@@ -310,7 +311,20 @@ export class SectionCard extends LitElement {
 
   private toggleOpen() {
     if (this.locked) return;
-    appStore.setOpenCard(this.open ? null : this.effectiveCardId);
+    const willOpen = !this.open;
+    appStore.setOpenCard(willOpen ? this.effectiveCardId : null);
+    this.vibrateOnToggle(willOpen);
+    if (willOpen) {
+      playAccordionPop();
+    }
+  }
+
+  private vibrateOnToggle(willOpen: boolean) {
+    if (typeof navigator === "undefined" || !("vibrate" in navigator)) {
+      return;
+    }
+
+    navigator.vibrate(willOpen ? 18 : 10);
   }
 
   private handleSoundsGoodClick() {
