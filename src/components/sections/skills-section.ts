@@ -24,7 +24,7 @@ export class SkillsSection extends LitElement {
 
     .chip {
       border: 1px solid var(--border);
-      background: var(--surface-2);
+      background: transparent;
       border-radius: 999px;
       padding: 0.3rem 0.62rem;
       font-size: 0.9rem;

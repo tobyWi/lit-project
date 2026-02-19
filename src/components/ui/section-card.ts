@@ -215,7 +215,7 @@ export class SectionCard extends LitElement {
       font-size: 0.9rem;
       line-height: 1;
       font-weight: 700;
-      color: #fff;
+      color: var(--accent);
     }
 
     .feedback-btn:hover {
@@ -228,20 +228,16 @@ export class SectionCard extends LitElement {
       outline-offset: 2px;
     }
 
-    .feedback-btn.good .icon {
-      background: var(--accent);
-    }
-
     .feedback-btn.good:not(:disabled) {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      color: var(--text-main);
+      border-color: var(--border);
+      background: #111111;
+      color: #ffffff;
     }
 
     .feedback-btn.is-selected.good {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      color: var(--text-main);
+      border-color: var(--border);
+      background: #111111;
+      color: #ffffff;
       font-weight: 600;
     }
 
@@ -254,7 +250,7 @@ export class SectionCard extends LitElement {
     }
 
     .feedback-btn:disabled .icon {
-      background: #8a8a8a;
+      color: #8a8a8a;
     }
 
     .feedback-btn.is-selected.good:disabled {
@@ -265,7 +261,7 @@ export class SectionCard extends LitElement {
     }
 
     .feedback-btn.is-selected.good:disabled .icon {
-      background: #8a8a8a;
+      color: #8a8a8a;
     }
 
     @media (max-width: 640px) {
@@ -397,8 +393,7 @@ export class SectionCard extends LitElement {
                       aria-pressed=${String(this.selectedChoice === soundsGoodLabel)}
                       @click=${this.handleSoundsGoodClick}
                     >
-                      <span class="icon" aria-hidden="true">+</span>
-                      <span>${soundsGoodLabel}</span>
+                      <span>${soundsGoodLabel} 👍</span>
                     </button>
                   </div>
                 `

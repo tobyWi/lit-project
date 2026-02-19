@@ -127,3 +127,29 @@ export function playHelloChime() {
     oscB.stop(now + 0.18);
   });
 }
+
+export function playConnectClickSound() {
+  withContext((ctx, now) => {
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.055, now + 0.018);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.14);
+    gain.connect(ctx.destination);
+
+    const oscA = ctx.createOscillator();
+    oscA.type = "triangle";
+    oscA.frequency.setValueAtTime(480, now);
+    oscA.frequency.exponentialRampToValueAtTime(680, now + 0.05);
+    oscA.connect(gain);
+    oscA.start(now);
+    oscA.stop(now + 0.08);
+
+    const oscB = ctx.createOscillator();
+    oscB.type = "sine";
+    oscB.frequency.setValueAtTime(740, now + 0.05);
+    oscB.frequency.exponentialRampToValueAtTime(620, now + 0.13);
+    oscB.connect(gain);
+    oscB.start(now + 0.05);
+    oscB.stop(now + 0.14);
+  });
+}

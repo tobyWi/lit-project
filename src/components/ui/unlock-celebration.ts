@@ -40,7 +40,8 @@ export class UnlockCelebration extends LitElement {
     }
 
     .dialog {
-      width: min(92vw, 520px);
+      width: min(calc(100vw - (var(--space-4) * 2) - 28px), 820px);
+      box-sizing: border-box;
       background: var(--surface);
       border: 3px solid var(--border);
       border-radius: 0;
