@@ -57,7 +57,7 @@ export class FeedbackCounter extends LitElement {
     .track {
       height: 0.7rem;
       border-radius: 0;
-      background: #cfcfcf;
+      background: var(--track-bg);
       overflow: hidden;
     }
 

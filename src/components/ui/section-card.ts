@@ -16,7 +16,6 @@ export class SectionCard extends LitElement {
   @property({ type: Boolean, reflect: true }) open = false;
   @property({ type: Boolean, reflect: true }) locked = false;
   @property({ type: Boolean }) showActions = true;
-  @property({ type: Number }) soundsGoodCount = 0;
   @property({ type: String }) selectedChoice: typeof soundsGoodLabel | "" = "";
   private unsubscribeStore?: () => void;
 
@@ -104,8 +103,8 @@ export class SectionCard extends LitElement {
       right: -2px;
       margin: 0;
       font-size: 0.78rem;
-      color: #ffffff;
-      background: #111111;
+      color: var(--ink-on-dark);
+      background: var(--surface-dark);
       border: 2px solid var(--border);
       border-bottom: 0;
       text-shadow: 1px 0 0 rgba(255, 255, 255, 0.35);
@@ -123,28 +122,6 @@ export class SectionCard extends LitElement {
       line-height: 1;
       display: inline-block;
       transform: translateY(-0.02rem);
-    }
-
-    .status-icon {
-      width: 1.25rem;
-      height: 1.25rem;
-      border-radius: 0;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.86rem;
-      line-height: 1;
-      background: var(--surface-2);
-      border: 2px solid var(--border);
-      filter: grayscale(1);
-      opacity: 0.65;
-    }
-
-    .status-icon.done {
-      background: var(--accent-soft);
-      border-color: var(--accent);
-      filter: none;
-      opacity: 1;
     }
 
     .chevron {
@@ -198,24 +175,10 @@ export class SectionCard extends LitElement {
       color: var(--text-muted);
       display: inline-flex;
       align-items: center;
-      gap: 0.45rem;
       transition:
         background-color 120ms ease,
         border-color 120ms ease,
         color 120ms ease;
-    }
-
-    .feedback-btn .icon {
-      width: 1.2rem;
-      height: 1.2rem;
-      border-radius: 0;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      line-height: 1;
-      font-weight: 700;
-      color: var(--accent);
     }
 
     .feedback-btn:hover {
@@ -230,38 +193,30 @@ export class SectionCard extends LitElement {
 
     .feedback-btn.good:not(:disabled) {
       border-color: var(--border);
-      background: #111111;
-      color: #ffffff;
+      background: var(--surface-dark);
+      color: var(--ink-on-dark);
     }
 
     .feedback-btn.is-selected.good {
       border-color: var(--border);
-      background: #111111;
-      color: #ffffff;
+      background: var(--surface-dark);
+      color: var(--ink-on-dark);
       font-weight: 600;
     }
 
     .feedback-btn:disabled {
       cursor: not-allowed;
       opacity: 1;
-      border-color: #9a9a9a;
-      background: #d7d7d7;
-      color: #5a5a5a;
-    }
-
-    .feedback-btn:disabled .icon {
-      color: #8a8a8a;
+      border-color: var(--disabled-border);
+      background: var(--disabled-bg);
+      color: var(--disabled-text);
     }
 
     .feedback-btn.is-selected.good:disabled {
-      border-color: #9a9a9a;
-      background: #d7d7d7;
-      color: #5a5a5a;
+      border-color: var(--disabled-border);
+      background: var(--disabled-bg);
+      color: var(--disabled-text);
       font-weight: 600;
-    }
-
-    .feedback-btn.is-selected.good:disabled .icon {
-      color: #8a8a8a;
     }
 
     @media (max-width: 640px) {
@@ -271,12 +226,6 @@ export class SectionCard extends LitElement {
 
       .choice {
         font-size: 0.8rem;
-      }
-
-      .status-icon {
-        width: 1.05rem;
-        height: 1.05rem;
-        font-size: 0.76rem;
       }
 
       .title-row {
@@ -309,7 +258,6 @@ export class SectionCard extends LitElement {
 
     const isCompleted = state.markedSectionIds.has(id);
     this.selectedChoice = isCompleted ? soundsGoodLabel : "";
-    this.soundsGoodCount = isCompleted ? 1 : 0;
     this.open = state.openCardId === id;
   };
 

@@ -26,7 +26,7 @@ export class UnlockCelebration extends LitElement {
     .overlay {
       position: absolute;
       inset: 0;
-      background: rgba(18, 28, 19, 0.48);
+      background: var(--overlay-accent);
       display: grid;
       place-items: center;
       opacity: 0;

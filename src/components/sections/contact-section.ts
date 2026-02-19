@@ -26,8 +26,8 @@ export class ContactSection extends LitElement {
       margin: 0.2rem 0 0;
       border: 2px solid var(--border);
       border-radius: 0;
-      background: #111111;
-      color: #ffffff;
+      background: var(--surface-dark);
+      color: var(--ink-on-dark);
       padding: 0.42rem 0.78rem;
       display: inline-flex;
       align-items: center;
@@ -44,7 +44,7 @@ export class ContactSection extends LitElement {
     }
 
     .connect-btn:hover {
-      background: #1a1a1a;
+      background: var(--surface-dark-hover);
     }
 
     .connect-btn:focus-visible {
@@ -59,7 +59,7 @@ export class ContactSection extends LitElement {
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.52);
+      background: var(--overlay-dark);
       display: grid;
       place-items: center;
       z-index: 80;
@@ -78,12 +78,6 @@ export class ContactSection extends LitElement {
       padding: var(--space-5);
       display: grid;
       gap: 0.55rem;
-    }
-
-    .dialog-head {
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
     }
 
     .dialog-title {
@@ -146,11 +140,6 @@ export class ContactSection extends LitElement {
       .dialog {
         width: calc(100vw - (var(--space-4) * 2));
         padding: var(--space-4);
-      }
-
-      .dialog-head {
-        flex-direction: column;
-        align-items: flex-start;
       }
     }
 
@@ -237,9 +226,7 @@ export class ContactSection extends LitElement {
                 aria-label="Contact details"
                 @click=${(e: Event) => e.stopPropagation()}
               >
-                <div class="dialog-head">
-                  <h3 class="dialog-title">${contactTitle}</h3>
-                </div>
+                <h3 class="dialog-title">${contactTitle}</h3>
                 <div class="row field">
                   <p class="field-label">${contactLabels.address}</p>
                   <p class="field-value">${cvData.contact.location}</p>

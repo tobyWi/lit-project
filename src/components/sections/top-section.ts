@@ -57,8 +57,8 @@ export class TopSection extends LitElement {
       bottom: 0.55rem;
       left: 0.55rem;
       margin: 0;
-      background: #111111;
-      color: #ffffff;
+      background: var(--surface-dark);
+      color: var(--ink-on-dark);
       border: 2px solid var(--border);
       padding: 0.18rem 0.45rem;
       font-size: 0.82rem;
