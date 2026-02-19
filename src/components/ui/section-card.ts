@@ -104,7 +104,7 @@ export class SectionCard extends LitElement {
       margin: 0;
       font-size: 0.78rem;
       color: #ffffff;
-      background: #111111;
+      background: #4a4a4a;
       border: 2px solid var(--border);
       border-bottom: 0;
       padding: 0.22rem 0.55rem;
