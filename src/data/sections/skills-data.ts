@@ -21,7 +21,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "CMS & Platforms",
-    items: ["Sanity", "WordPress", "E-commerce Frontends"],
+    items: ["Sanity", "WordPress", "PHP", "E-commerce Frontends"],
   },
   {
     title: "Tooling & Workflow",
@@ -45,5 +45,9 @@ export const skillGroups: SkillGroup[] = [
       "Performance Optimization",
       "Structured Root-Cause Analysis",
     ],
+  },
+  {
+    title: "Familiar With",
+    items: ["Photoshop", "AWS", "Cloudflare"],
   },
 ];
