@@ -2,6 +2,7 @@ import { LitElement, css, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { cvData } from "../../data/cv-data";
 import {
+  contactLabelSymbols,
   contactLabels,
   contactLockedMeta,
   contactPlaceholderChecks,
@@ -129,6 +130,9 @@ export class ContactSection extends LitElement {
       margin: 0;
       font-weight: 800;
       color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
     }
 
     .field-value {
@@ -228,18 +232,27 @@ export class ContactSection extends LitElement {
               >
                 <h3 class="dialog-title">${contactTitle}</h3>
                 <div class="row field">
-                  <p class="field-label">${contactLabels.address}</p>
+                  <p class="field-label">
+                    <span aria-hidden="true">${contactLabelSymbols.address}</span>
+                    <span>${contactLabels.address}</span>
+                  </p>
                   <p class="field-value">${cvData.contact.location}</p>
                 </div>
                 <div class="row field">
-                  <p class="field-label">${contactLabels.phone}</p>
+                  <p class="field-label">
+                    <span aria-hidden="true">${contactLabelSymbols.phone}</span>
+                    <span>${contactLabels.phone}</span>
+                  </p>
                   <p class="field-value">
                     <a href="tel:${cvData.contact.phone}">${cvData.contact.phone}</a>
                   </p>
                 </div>
                 ${hasRealEmail
                   ? html`<div class="row field">
-                      <p class="field-label">${contactLabels.email}</p>
+                      <p class="field-label">
+                        <span aria-hidden="true">${contactLabelSymbols.email}</span>
+                        <span>${contactLabels.email}</span>
+                      </p>
                       <p class="field-value">
                         <a href="mailto:${cvData.contact.email}"
                           >${cvData.contact.email}</a
@@ -249,7 +262,10 @@ export class ContactSection extends LitElement {
                   : null}
                 ${hasRealLinkedIn
                   ? html`<div class="row field">
-                      <p class="field-label">${contactLabels.linkedin}</p>
+                      <p class="field-label">
+                        <span aria-hidden="true">${contactLabelSymbols.linkedin}</span>
+                        <span>${contactLabels.linkedin}</span>
+                      </p>
                       <p class="field-value">
                         <a
                           href="${cvData.contact.linkedin}"
@@ -262,7 +278,10 @@ export class ContactSection extends LitElement {
                   : null}
                 ${hasRealGitHub
                   ? html`<div class="row field">
-                      <p class="field-label">${contactLabels.github}</p>
+                      <p class="field-label">
+                        <span aria-hidden="true">${contactLabelSymbols.github}</span>
+                        <span>${contactLabels.github}</span>
+                      </p>
                       <p class="field-value">
                         <a
                           href="${cvData.contact.github}"
@@ -274,7 +293,10 @@ export class ContactSection extends LitElement {
                     </div>`
                   : null}
                 <div class="row field">
-                  <p class="field-label">References</p>
+                  <p class="field-label">
+                    <span aria-hidden="true">${contactLabelSymbols.references}</span>
+                    <span>References</span>
+                  </p>
                   <p class="field-value">${referencesText}</p>
                 </div>
                 <button class="close-btn" type="button" @click=${this.closeModal}>

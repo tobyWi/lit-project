@@ -9,6 +9,15 @@ export const contactLabels = {
   github: "GitHub",
 } as const;
 
+export const contactLabelSymbols = {
+  address: "📍",
+  phone: "☎️",
+  email: "✉️",
+  linkedin: "🔗",
+  github: "💻",
+  references: "🗂️",
+} as const;
+
 export const contactPlaceholderChecks = {
   email: "you@example.com",
   profileFragment: "yourname",
